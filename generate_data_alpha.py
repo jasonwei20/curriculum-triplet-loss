@@ -4,7 +4,9 @@ if __name__ == "__main__":
 
     cfg_json_list = [
         # "config/generate_data/fewrel_nc5_a01.json"
-        "config/generate_data/huff_nc5_a01.json"
+        # "config/generate_data/huff_nc5_a01.json"
+        # "config/generate_data/amzn_nc5_rd.json"
+        # "config/generate_data/amzn_nc5_sr.json"
     ]
 
     for cfg_json in cfg_json_list:

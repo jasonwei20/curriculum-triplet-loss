@@ -99,8 +99,8 @@ def generate_aug_train_sentences(train_sentence_to_label, train_label_to_sentenc
         for train_sentence in train_sentences:
 
             train_sentence_aug_to_label[train_sentence] = label
-            # for _ in range(cfg.n_orig):
-            train_label_to_sentences_aug[label].append(train_sentence)
+            for _ in range(cfg.n_orig):
+                train_label_to_sentences_aug[label].append(train_sentence)
 
             aug_sentences = sentence_to_aug_sentences[train_sentence]
 

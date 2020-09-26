@@ -21,8 +21,9 @@ def train_eval_cl_gradual_model(
     iter_bar = tqdm(range(cfg.total_updates + 1))
     update_num_list = []; train_loss_list = []; val_acc_list = []
 
-    Path(f"plots/{cfg.exp_id}").mkdir(parents=True, exist_ok=True)
-    writer = open(f"plots/{cfg.exp_id}/s{seed_num}_logs.csv", "w")
+    output_folder = f"plots/{cfg.exp_id}_nc{cfg.train_nc}_aug{cfg.aug_type}_norig{cfg.n_orig}_curr{cfg.curriculum_type}"
+    Path(output_folder).mkdir(parents=True, exist_ok=True)
+    writer = open(f"{output_folder}/s{seed_num}_logs.csv", "w")
     mb_size = 64
     target_activated_examples = 64
     avg_percent_activated = 1.0
@@ -100,6 +101,6 @@ def train_eval_cl_gradual_model(
             if cfg.hard_negative_mining == 'semi-hard':
                 mb_size = min(int(target_activated_examples / avg_percent_activated), 2000)
 
-    visualization.plot_jasons_lineplot(update_num_list, train_loss_list, 'updates', 'training loss', f"{cfg.exp_id} n_train_c={cfg.train_nc} max_val_acc={max(val_acc_list):.3f}", f"plots/{cfg.exp_id}/s{seed_num}_train_loss.png")    
-    visualization.plot_jasons_lineplot(update_num_list, val_acc_list, 'updates', 'validation accuracy', f"{cfg.exp_id} n_train_c={cfg.train_nc} max_val_acc={max(val_acc_list):.3f}", f"plots/{cfg.exp_id}/s{seed_num}_val_acc{max(val_acc_list):.3f}.png")
-    print(f"{max(val_acc_list):.3f} val acc from {cfg.exp_id}\n\n")
+    visualization.plot_jasons_lineplot(update_num_list, train_loss_list, 'updates', 'training loss', f"{cfg.exp_id} n_c={cfg.train_nc} aug={cfg.aug_type} curr={cfg.curriculum_type} max_val_acc={max(val_acc_list):.3f}", f"{output_folder}/s{seed_num}_train_loss.png")    
+    visualization.plot_jasons_lineplot(update_num_list, val_acc_list, 'updates', 'validation accuracy', f"{cfg.exp_id} n_c={cfg.train_nc} aug={cfg.aug_type} curr={cfg.curriculum_type} max_val_acc={max(val_acc_list):.3f}", f"{output_folder}/s{seed_num}_val_acc{max(val_acc_list):.3f}.png")
+    return max(val_acc_list)

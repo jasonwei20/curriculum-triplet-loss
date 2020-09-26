@@ -1,8 +1,8 @@
 {
-    "exp_id": "fewrel",
-    "train_path": "data/fewrel/train.txt",
-    "test_path": "data/fewrel/test.txt",
-    "num_output_classes": 64,
+    "exp_id": "huff",
+    "train_path": "data/huff/train.txt",
+    "test_path": "data/huff/test.txt",
+    "num_output_classes": 41,
     "train_nc": 5,
     "aug_type": "sr",
     "n_aug": 4,

@@ -73,6 +73,7 @@ class triplet_ap_config(NamedTuple):
 
     # augmentation params
     n_aug: int = None
+    n_orig: int = None
     aug_type: str = None #sr, eda
     alpha: int = 0.1
 

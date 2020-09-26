@@ -4,9 +4,9 @@
     "test_path": "data/fewrel/test.txt",
     "num_output_classes": 64,
     "train_nc": 5,
-    "aug_type": "sr",
+    "aug_type": "eda",
     "n_aug": 4,
-    "n_orig": 1,
+    "n_orig": 2,
     "curriculum_type": "random",
     "total_updates": 24000,
     "first_stage_updates": 4000,
@@ -20,5 +20,5 @@
     "fifth_stage_alpha": 0.4,
     "sixth_stage_alpha": 0.5,
     "eval_interval": 500,
-    "num_seeds": 5
+    "num_seeds": 9
 }
