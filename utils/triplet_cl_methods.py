@@ -11,8 +11,10 @@ def train_eval_cl_gradual_model(
 ):
 
     #load data
-    train_sentence_to_label, train_label_to_sentences_orig, _, test_sentence_to_label, train_sentence_to_encoding, test_sentence_to_encoding = dataloader.load_ap_data_no_aug(cfg, seed_num)
+    train_sentence_to_label_orig, train_label_to_sentences_orig, _, test_sentence_to_label, train_sentence_to_encoding_orig, test_sentence_to_encoding = dataloader.load_ap_data_no_aug(cfg, seed_num)
     train_label_to_sentences_aug = train_label_to_sentences_orig.copy()
+    train_sentence_to_label = train_sentence_to_label_orig.copy()
+    train_sentence_to_encoding = train_sentence_to_encoding_orig.copy()
 
     # initialize model
     model, loss_fn, optimizer, device = triplet_methods.initialize_model(cfg)
@@ -51,16 +53,18 @@ def train_eval_cl_gradual_model(
                 train_sentence_to_label, train_label_to_sentences_aug, train_sentence_to_encoding = dataloader.reload_ap_cl_data(train_sentence_to_label, train_label_to_sentences_orig, cfg, random_alpha)
 
         elif cfg.curriculum_type == "anti":
-            if update_num == cfg.first_stage_updates:
+            if update_num == 1:
                 train_sentence_to_label, train_label_to_sentences_aug, train_sentence_to_encoding = dataloader.reload_ap_cl_data(train_sentence_to_label, train_label_to_sentences_orig, cfg, cfg.sixth_stage_alpha)
-            elif update_num == cfg.second_stage_updates:
+            elif update_num == cfg.first_stage_updates:
                 train_sentence_to_label, train_label_to_sentences_aug, train_sentence_to_encoding = dataloader.reload_ap_cl_data(train_sentence_to_label, train_label_to_sentences_orig, cfg, cfg.fifth_stage_alpha)
-            elif update_num == cfg.third_stage_updates:
+            elif update_num == cfg.second_stage_updates:
                 train_sentence_to_label, train_label_to_sentences_aug, train_sentence_to_encoding = dataloader.reload_ap_cl_data(train_sentence_to_label, train_label_to_sentences_orig, cfg, cfg.fourth_stage_alpha)
-            elif update_num == cfg.fourth_stage_updates:
+            elif update_num == cfg.third_stage_updates:
                 train_sentence_to_label, train_label_to_sentences_aug, train_sentence_to_encoding = dataloader.reload_ap_cl_data(train_sentence_to_label, train_label_to_sentences_orig, cfg, cfg.third_stage_alpha)
-            elif update_num == cfg.fifth_stage_updates:
+            elif update_num == cfg.fourth_stage_updates:
                 train_sentence_to_label, train_label_to_sentences_aug, train_sentence_to_encoding = dataloader.reload_ap_cl_data(train_sentence_to_label, train_label_to_sentences_orig, cfg, cfg.second_stage_alpha)
+            elif update_num == cfg.fifth_stage_updates:
+                train_sentence_to_label, train_label_to_sentences_aug, train_sentence_to_encoding = train_sentence_to_label_orig, train_label_to_sentences_orig, train_sentence_to_encoding_orig
         #####################################################################################
         
         anchor, pos, neg = dataloader.generate_triplet_batch(train_label_to_sentences_aug, train_sentence_to_encoding, device, mb_size=mb_size)
@@ -80,9 +84,9 @@ def train_eval_cl_gradual_model(
             val_acc = triplet_methods.eval_model(
                 model, 
                 device, 
-                train_sentence_to_label, 
+                train_sentence_to_label_orig, 
                 train_label_to_sentences_orig, 
-                train_sentence_to_encoding, 
+                train_sentence_to_encoding_orig, 
                 test_sentence_to_label, 
                 test_sentence_to_encoding,
             )

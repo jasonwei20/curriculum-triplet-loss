@@ -26,3 +26,28 @@ def plot_jasons_lineplot(
     plt.clf()
 
     print(f"plot saved at {output_png_path}")
+
+def plot_cra_lineplot(
+    x,
+    curr_y, 
+    rand_y, 
+    anti_y,
+    title,
+    output_png_path,
+    ):
+
+    _, ax = plt.subplots()
+    plt.plot(x, curr_y, linewidth=1, label = "curriculum")
+    plt.plot(x, rand_y, linewidth=1, label = "random")
+    plt.plot(x, anti_y, linewidth=1, label = "anti")
+
+    plt.xlabel("updates")
+    plt.ylabel("performance")
+    plt.title(title)
+    plt.legend()
+    
+    plt.tight_layout()
+    plt.savefig(output_png_path, dpi=400)
+    plt.clf()
+
+    print(f"plot saved at {output_png_path}")
