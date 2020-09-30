@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
     # plot_cra_combined_plot(Path("plots/huff_nc5_augeda_norig1_curr"))
     # plot_cra_combined_plot(Path("plots/huff_nc5_augrd_norig1_curr"))
-    plot_cra_combined_plot(Path("plots/huff_nc5_augsr_norig1_curr"))
-    # plot_cra_combined_plot(Path("plots/fewrel_nc5_augsr_norig1_curr"))
+    # plot_cra_combined_plot(Path("plots/huff_nc5_augsr_norig1_curr"))
+    plot_cra_combined_plot(Path("plots/fewrel_nc5_augsr_norig1_curr"))
     # plot_cra_combined_plot(Path("plots/fewrel_nc5_augeda_norig1_curr"))
     # plot_cra_combined_plot(Path("plots/fewrel_nc5_augrd_norig1_curr"))
